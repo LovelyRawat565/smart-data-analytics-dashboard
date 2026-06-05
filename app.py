@@ -4,7 +4,7 @@ import plotly.express as px
 import io
 
 # 1. Page Configuration
-st.set_page_config(page_title="AI-Powered Data Analytics Suite", layout="wide")
+st.set_page_config(page_title="AI-Powered Data Analytics Suite", page_icon="🧬", layout="wide")
 
 # Custom CSS styling (Fixes text visibility in dark mode by forcing black text)
 st.markdown("""
