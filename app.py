@@ -6,22 +6,35 @@ import io
 # 1. Page Configuration
 st.set_page_config(page_title="AI-Powered Data Analytics Suite", layout="wide")
 
-# Custom CSS styling
+# Custom CSS styling (Fixes text visibility in dark mode by forcing black text)
 st.markdown("""
     <style>
     .metric-box {
-        background-color: #f0f2f6;
+        background-color: #f0f2f6 !important;
         padding: 20px;
         border-radius: 10px;
         text-align: center;
         box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        color: #111111 !important;
+    }
+    .metric-box h3, .metric-box h2 {
+        color: #111111 !important;
+        margin: 0px;
     }
     .insight-box {
-        background-color: #e8f4f8;
+        background-color: #e8f4f8 !important;
         padding: 15px;
         border-radius: 8px;
         border-left: 5px solid #2980b9;
         margin-bottom: 10px;
+        color: #111111 !important;
+    }
+    .insight-box strong {
+        color: #2980b9 !important;
+    }
+    /* Streamlit widgets text visibility fix */
+    .stMarkdown, p, span {
+        color: inherit;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -83,19 +96,19 @@ if uploaded_file is not None:
         avg_order_val = filtered_df["Total_Sales"].mean()
         top_payment = filtered_df.groupby("Payment_Method")["Total_Sales"].sum().idxmax()
         
-        # Displaying Insights
+        # Displaying Insights with dark-mode safe styling
         st.markdown(f"""
             <div class='insight-box'>
-                <strong>🏆 Top Performing Product:</strong> 💻 {top_product} sabse zyada bikne wala product hai, jisne is filtered criteria me sabse zyada revenue generate kiya hai.
+                <strong>🏆 Top Performing Product:</strong> {top_product} sabse zyada bikne wala product hai, jisne is filtered criteria me sabse zyada revenue generate kiya hai.
             </div>
             <div class='insight-box'>
-                <strong>📍 Target Market Leader:</strong> 🌆 Max revenue <strong>{top_city}</strong> sheher se aa raha hai. Is region me marketing badhane se sales aur grow ho sakti hain.
+                <strong>📍 Target Market Leader:</strong> Max revenue <strong>{top_city}</strong> sheher se aa raha hai. Is region me marketing badhane se sales aur grow ho sakti hain.
             </div>
             <div class='insight-box'>
-                <strong>💳 Customer Behavior:</strong> 🏪 Aapke customers sabse zyada <strong>{top_payment}</strong> mode ka use karke payment karna pasand kar rahe hain.
+                <strong>💳 Customer Behavior:</strong> Aapke customers sabse zyada <strong>{top_payment}</strong> mode ka use karke payment karna pasand kar rahe hain.
             </div>
             <div class='insight-box'>
-                <strong>📊 Ticket Size:</strong> 📑 Aapka Average Order Value (AOV) <strong>₹{avg_order_val:,.2f}</strong> hai, yaani har customer lagbhag itne tak ki shopping kar raha hai.
+                <strong>📊 Ticket Size:</strong> Aapka Average Order Value (AOV) <strong>₹{avg_order_val:,.2f}</strong> hai, yaani har customer lagbhag itne tak ki shopping kar raha hai.
             </div>
         """, unsafe_allow_html=True)
     else:
@@ -142,3 +155,4 @@ if uploaded_file is not None:
     
 else:
     st.info("Aapne jo 'sales_data.csv' banayi thi use upload kijiye ya koi bhi dusri Excel/CSV file upload karke test kijiye.")
+    
